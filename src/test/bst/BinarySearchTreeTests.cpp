@@ -3,7 +3,8 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/included/unit_test.hpp>
 
-#include "BST.h"
+#include "../../main/bst/src/BST.h"
+#include "../../main/bst/src/BST.cpp"
 
 // Test Fixtures: empty tree and tree with contents
 struct EmptyBinarySearchTree {
@@ -474,8 +475,25 @@ BOOST_AUTO_TEST_SUITE(Move)
     }
 
     BOOST_FIXTURE_TEST_CASE(Move_Assignment_Operator, BigBinarySearchTree) {
-        BST newTree = b;
+        BST newTree;
 
+        newTree.insert(70, "example");
+        
+        newTree = std::move(b);
+
+        newTree.lookup(70) == nullptr;
+        BOOST_CHECK(b.lookup(22) == nullptr);
+        BOOST_CHECK(*newTree.lookup(22) == "Mary");
+    }
+
+    BOOST_FIXTURE_TEST_CASE(Move_Assignment_Operator_Remove_Old_Nodes, BigBinarySearchTree) {
+        BST newTree;
+
+        newTree.insert(70, "example");
+
+        newTree = std::move(b);
+
+        BOOST_CHECK(newTree.lookup(70) == nullptr);
         BOOST_CHECK(b.lookup(22) == nullptr);
         BOOST_CHECK(*newTree.lookup(22) == "Mary");
     }

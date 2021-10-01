@@ -194,16 +194,18 @@ void BST::displayTree() {
 void BST::displayTreeRecursion(std::string prefix, Node* node, bool isLeft) {
     if( node != nullptr )
     {
+        // prefix allows each layer to be indented correctly
         std::cout << prefix;
 
+        // isLeft determines whether this node is a left or right node
         std::cout << (isLeft ? "├──" : "└──" );
 
         // print the value of the node
         std::cout << node->key << ": " << node->item << std::endl;
 
         // enter the next tree level - left and right branch
-        displayTreeRecursion( prefix + (isLeft ? "│   " : "    "), node->leftChild, true);
-        displayTreeRecursion( prefix + (isLeft ? "│   " : "    "), node->rightChild, false);
+        displayTreeRecursion(prefix + (isLeft ? "│   " : "    "), node->leftChild, true);
+        displayTreeRecursion(prefix + (isLeft ? "│   " : "    "), node->rightChild, false);
     }
 }
 
@@ -287,13 +289,15 @@ BST &BST::operator=(const BST& original) {
     return *this;
 }
 
-BST::BST(BST && original) {
-    this->root = deepCopy(original.root);
-    deepDelete(original.root);
+BST::BST(BST && original) noexcept {
+    deepDelete(this->root);
+    this->root = original.root;
+    original.root = leaf();
 }
 
-BST &BST::operator=(BST && original) {
-    this->root = deepCopy(original.root);
-    deepDelete(original.root);
+BST &BST::operator=(BST && original) noexcept {
+    deepDelete(this->root);
+    this->root = original.root;
+    original.root = leaf();
     return *this;
 }

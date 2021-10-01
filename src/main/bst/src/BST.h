@@ -32,10 +32,10 @@ public:
     BST & operator=(const BST &);
 
     // Move constructor
-    BST(BST &&);
+    BST(BST &&) noexcept;
 
     // Move assigment operator
-    BST& operator=(BST&&);
+    BST& operator=(BST&&) noexcept;
 
 private:
     struct Node;
