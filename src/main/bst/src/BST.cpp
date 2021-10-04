@@ -192,20 +192,17 @@ void BST::displayTree() {
 }
 
 void BST::displayTreeRecursion(std::string prefix, Node* node, bool isLeft) {
-    if( node != nullptr )
-    {
-        // prefix allows each layer to be indented correctly
+    if (node != nullptr) {
         std::cout << prefix;
 
-        // isLeft determines whether this node is a left or right node
-        std::cout << (isLeft ? "├──" : "└──" );
+        std::cout << (isLeft ? "├─" : "└─" );
 
-        // print the value of the node
         std::cout << node->key << ": " << node->item << std::endl;
 
-        // enter the next tree level - left and right branch
-        displayTreeRecursion(prefix + (isLeft ? "│   " : "    "), node->leftChild, true);
-        displayTreeRecursion(prefix + (isLeft ? "│   " : "    "), node->rightChild, false);
+        std::string branch = prefix + (isLeft ? "│ " : "  ");
+
+        displayTreeRecursion(branch, node->leftChild, true);
+        displayTreeRecursion(branch, node->rightChild, false);
     }
 }
 

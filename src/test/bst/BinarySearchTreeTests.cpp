@@ -481,7 +481,6 @@ BOOST_AUTO_TEST_SUITE(Move)
         
         newTree = std::move(b);
 
-        newTree.lookup(70) == nullptr;
         BOOST_CHECK(b.lookup(22) == nullptr);
         BOOST_CHECK(*newTree.lookup(22) == "Mary");
     }
