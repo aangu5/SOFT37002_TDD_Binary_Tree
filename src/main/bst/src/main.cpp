@@ -6,7 +6,7 @@
 #include "iostream"
 
 int main()  {
-    BST b;
+    BST<int, std::string> b;
 
     b.insert(22, "Jane");
     b.insert(22, "Mary");

@@ -3,7 +3,11 @@
 //
 
 #include "iostream"
+#include "HashTable.h"
 
 int main() {
     std::cout << "Hello world" << std::endl;
+
+    HashTable<int, std::string> table;
+
 }

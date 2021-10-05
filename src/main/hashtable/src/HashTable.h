@@ -7,25 +7,40 @@
 
 #include "string"
 
-class HashTable {
+template <typename K, typename I> class HashTable {
 public:
-    using Key = std::string;
-    using Item = std::string;
 
-    HashTable();
+    HashTable() {
 
-    void insert(Key, Item);
-    Item* lookup(Key);
-    void remove(Key);
+    }
+
+    void insert(K, I) {
+        return;
+    }
+
+    I* lookup(K) {
+        return nullptr;
+    }
+
+    void remove(K) {
+        return;
+    }
+
+    void removeIf(std::function<bool(K)> function) {
+        return;
+    }
+
 
 private:
     // as part of the hash table, there are two steps to obtain the array index:
     //
-    // 1. Hash the key to an integer hash value using some hashing algorithm.
+    // 1. Hash the K to an integer hash value using some hashing algorithm.
     // 2. Apply the modulo operation to the hash value to get an array index.
     //
     // this method only carries out the first part
-    unsigned int hash(Key);
+    unsigned int hash(K k) {
+        return std::hash<K>{}(k);
+    }
 };
 
 

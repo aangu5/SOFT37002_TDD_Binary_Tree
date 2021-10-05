@@ -1,11 +1,11 @@
-#define BOOST_TEST_MODULE BinarySearchTreeTestsInsertAndLookup
+#define BOOST_TEST_MODULE HashTableTests
 #define BOOST_TEST_DYN_LINK
 #define BOOST_TEST_MAIN
 #include <boost/test/included/unit_test.hpp>
 
-#include "BST.h"
+#include "HashTable.h"
 
-using Dict = BST<int, std::string>;
+using Dict = HashTable<int, std::string>;
 
 // Test Fixtures: empty tree and tree with contents
 struct EmptyBinarySearchTree {
@@ -226,74 +226,6 @@ BOOST_AUTO_TEST_SUITE(Insert_And_Lookup_Big_Tree)
         std::string output = *b.lookup(50);
         std::string expected = "def";
         BOOST_CHECK_EQUAL(output, expected);
-    }
-
-BOOST_AUTO_TEST_SUITE_END()
-
-// DISPLAY THE TREE
-
-BOOST_AUTO_TEST_SUITE(Display)
-
-// https://stackoverflow.com/questions/5405016/can-i-check-my-programs-output-with-boost-test
-struct cout_redirect {
-    cout_redirect(std::streambuf* new_buffer) : old(std::cout.rdbuf(new_buffer)) {}
-
-    ~cout_redirect() {
-        std::cout.rdbuf(old);
-    }
-private:
-    std::streambuf* old;
-};
-
-    BOOST_FIXTURE_TEST_CASE(Print_Empty_Tree, EmptyBinarySearchTree) {
-
-        boost::test_tools::output_test_stream output; {
-            cout_redirect guard( output.rdbuf());
-            b.displayLTR();
-        }
-
-        BOOST_CHECK(output.is_equal(""));
-    }
-
-    BOOST_FIXTURE_TEST_CASE(Print_One_Node, EmptyBinarySearchTree) {
-
-        boost::test_tools::output_test_stream output; {
-            cout_redirect guard( output.rdbuf());
-            b.insert(50, "abc");
-
-            b.displayLTR();
-        }
-
-        std::string str = output.str();
-
-        str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
-
-        BOOST_CHECK_EQUAL(str, "50:abc");
-    }
-
-    BOOST_FIXTURE_TEST_CASE(Print_Ten_Nodes, EmptyBinarySearchTree) {
-
-        boost::test_tools::output_test_stream output; {
-            cout_redirect guard( output.rdbuf());
-            b.insert(50, "ij");
-            b.insert(10, "ab");
-            b.insert(100, "st");
-            b.insert(60, "kl");
-            b.insert(40, "gh");
-            b.insert(70, "mn");
-            b.insert(90, "qr");
-            b.insert(80, "op");
-            b.insert(20, "cd");
-            b.insert(30, "ef");
-
-            b.displayLTR();
-        }
-
-        std::string str = output.str();
-
-        str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
-
-        BOOST_CHECK_EQUAL(str, "10:ab20:cd30:ef40:gh50:ij60:kl70:mn80:op90:qr100:st");
     }
 
 BOOST_AUTO_TEST_SUITE_END()
