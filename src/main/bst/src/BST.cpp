@@ -3,6 +3,8 @@
 //
 
 #include "BST.h"
+
+#include <utility>
 #include "iostream"
 
 struct BST::Node {
@@ -13,17 +15,10 @@ struct BST::Node {
 
     Node(Key key, Item item) {
         this->key = key;
-        this->item = item;
+        this->item = std::move(item);
         leftChild = leaf();
         rightChild = leaf();
     }
-//
-//    ~Node() {
-//        delete(key);
-//        delete(item);
-//        delete(rightChild);
-//        delete(leftChild);
-//    }
 };
 
 BST::BST() {
@@ -60,7 +55,7 @@ BST::Item *BST::lookupRecursion(Node* currentNode, int key) {
     return item;
 }
 
-void BST::insert(BST::Key key, BST::Item item) {
+void BST::insert(BST::Key key, const BST::Item& item) {
     if (!root) {
         Node* node = new Node(key, item);
         root = node;
@@ -69,7 +64,7 @@ void BST::insert(BST::Key key, BST::Item item) {
     }
 }
 
-void BST::insertRecursion(BST::Node * node, BST::Key key, BST::Item item) {
+void BST::insertRecursion(BST::Node * node, BST::Key key, const BST::Item& item) {
     if (node->key == key) {
         node->item = item;
     } else if (node->key < key) {
@@ -87,46 +82,60 @@ void BST::insertRecursion(BST::Node * node, BST::Key key, BST::Item item) {
     }
 }
 
-void BST::displayLTR() {
-    displayRecursionLTR(root);
+void BST::display() {
+    displayRecursion(root);
 }
 
-void BST::displayRecursionLTR(BST::Node * node) {
+void BST::displayRecursion(BST::Node* node ) {
     if (!root) {
         return;
     }
 
     if (node->leftChild) {
-        displayRecursionLTR(node->leftChild);
+        displayRecursion(node->leftChild);
     }
 
-    std::cout << node->key << ":" << node->item << std::endl;
+    std::cout << node->key << " " << node->item << std::endl;
 
     if (node->rightChild) {
-        displayRecursionLTR(node->rightChild);
+        displayRecursion(node->rightChild);
     }
 }
 
-void BST::displayRTL() {
-    displayRecursionRTL(root);
+void BST::displayTree() {
+    displayTreeRecursion("", root);
 }
 
-void BST::displayRecursionRTL(BST::Node * node) {
-    if (!root) {
-        return;
-    }
+void BST::displayTreeRecursion(const std::string& prefix, Node* node) {
+    if (node != nullptr) {
+        std::cout << prefix;
 
-    if (node->rightChild) {
-        displayRecursionRTL(node->rightChild);
-    }
+        std::cout << node->key << " " << node->item << std::endl;
 
-    std::cout << node->key << ":" << node->item << std::endl;
+        std::string branch = prefix + "  ";
 
-    if (node->leftChild) {
-        displayRecursionRTL(node->leftChild);
+        displayTreeRecursion(branch, node->leftChild);
+        displayTreeRecursion(branch, node->rightChild);
     }
 }
 
+void BST::displayTreeInverted() {
+    displayTreeRecursionInverted("", root);
+}
+
+void BST::displayTreeRecursionInverted(const std::string& prefix, Node* node) {
+    if (node != nullptr) {
+        std::string branch = prefix + "  ";
+
+        displayTreeRecursionInverted(branch, node->rightChild);
+
+        std::cout << prefix;
+
+        std::cout << node->key << " " << node->item << std::endl;
+
+        displayTreeRecursionInverted(branch, node->leftChild);
+    }
+}
 
 
 bool BST::remove(BST::Key key) {
@@ -187,26 +196,7 @@ bool BST::isLeaf(BST::Node* node) {
     return node == leaf();
 }
 
-void BST::displayTree() {
-    displayTreeRecursion("", root, false);
-}
-
-void BST::displayTreeRecursion(std::string prefix, Node* node, bool isLeft) {
-    if (node != nullptr) {
-        std::cout << prefix;
-
-        std::cout << (isLeft ? "├─" : "└─" );
-
-        std::cout << node->key << ": " << node->item << std::endl;
-
-        std::string branch = prefix + (isLeft ? "│ " : "  ");
-
-        displayTreeRecursion(branch, node->leftChild, true);
-        displayTreeRecursion(branch, node->rightChild, false);
-    }
-}
-
-void *BST::removeIfRecursion(Node* node, std::function<bool(Key)> function) {
+void *BST::removeIfRecursion(Node* node, const std::function<bool(Key)>& function) {
 
     if (node->leftChild != nullptr) {
         removeIfRecursion(node->leftChild, function);

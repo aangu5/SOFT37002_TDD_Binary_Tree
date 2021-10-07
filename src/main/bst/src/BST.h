@@ -15,11 +15,11 @@ public:
     using Item = std::string;
 
     Item* lookup(Key);
-    void insert(Key, Item);
+    void insert(Key, const Item&);
     bool remove(Key);
-    void displayLTR();
-    void displayRTL();
+    void display();
     void displayTree();
+    void displayTreeInverted();
     void removeIf(std::function<bool(Key)>);
 
     BST();
@@ -41,18 +41,17 @@ private:
     struct Node;
     Node* root;
     Item* lookupRecursion(Node *currentNode, Key key);
-    void insertRecursion(Node*, Key, Item);
-    void displayRecursionLTR(Node*);
-    void displayRecursionRTL(Node*);
-    void displayTreeRecursion(std::string prefix, Node*, bool);
+    void insertRecursion(Node*, Key, const Item&);
+    void displayRecursion(Node*);
+    void displayTreeRecursion(const std::string& prefix, Node*);
+    void displayTreeRecursionInverted(const std::string& prefix, Node*);
     Node * removeRecursion(Node*, Key);
-    void * removeIfRecursion(Node*, std::function<bool(Key)>);
+    void * removeIfRecursion(Node*, const std::function<bool(Key)>&);
     void deepDelete(Node*);
     Node* deepCopy(Node*);
     static Node* findSmallestNode(Node*);
     static Node* leaf();
     static bool isLeaf(Node*);
-
 
 };
 

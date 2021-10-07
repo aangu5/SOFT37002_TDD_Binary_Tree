@@ -27,10 +27,14 @@ int main()  {
 
     std::cout << "Printing left to right" << std::endl;
 
-    b.displayLTR();
+    b.display();
 
-    std::cout << "Printing right to left" << std::endl;
+    std::cout << "Printing tree" << std::endl;
 
     b.displayTree();
+
+    std::cout << "Printing inverted tree" << std::endl;
+
+    b.displayTreeInverted();
 
 }

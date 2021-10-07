@@ -3,8 +3,7 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/included/unit_test.hpp>
 
-#include "../../main/bst/src/BST.h"
-#include "../../main/bst/src/BST.cpp"
+#include "BST.h"
 
 // Test Fixtures: empty tree and tree with contents
 struct EmptyBinarySearchTree {
@@ -248,7 +247,7 @@ private:
 
         boost::test_tools::output_test_stream output; {
             cout_redirect guard( output.rdbuf());
-            b.displayLTR();
+            b.display();
         }
 
         BOOST_CHECK(output.is_equal(""));
@@ -260,14 +259,14 @@ private:
             cout_redirect guard( output.rdbuf());
             b.insert(50, "abc");
 
-            b.displayLTR();
+            b.display();
         }
 
         std::string str = output.str();
 
         str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
 
-        BOOST_CHECK_EQUAL(str, "50:abc");
+        BOOST_CHECK_EQUAL(str, "50 abc");
     }
 
     BOOST_FIXTURE_TEST_CASE(Print_Ten_Nodes, EmptyBinarySearchTree) {
@@ -285,14 +284,44 @@ private:
             b.insert(20, "cd");
             b.insert(30, "ef");
 
-            b.displayLTR();
+            b.display();
         }
 
         std::string str = output.str();
 
         str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
 
-        BOOST_CHECK_EQUAL(str, "10:ab20:cd30:ef40:gh50:ij60:kl70:mn80:op90:qr100:st");
+        BOOST_CHECK_EQUAL(str, "10 ab20 cd30 ef40 gh50 ij60 kl70 mn80 op90 qr100 st");
+    }
+
+    BOOST_FIXTURE_TEST_CASE(Print_Tree, BigBinarySearchTree) {
+
+        boost::test_tools::output_test_stream output; {
+            cout_redirect guard( output.rdbuf());
+
+            b.displayTree();
+        }
+
+        std::string str = output.str();
+
+        str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+
+        BOOST_CHECK_EQUAL(str, "22 Mary  0 Harold    -1 Edward    9 Edward      4 Stephen        1 William      19 Henry  37 Victoria    26 Charles      24 James        23 Elizabeth      31 Anne    42 Elizabeth");
+    }
+
+    BOOST_FIXTURE_TEST_CASE(Print_Tree_Inverted, BigBinarySearchTree) {
+
+        boost::test_tools::output_test_stream output; {
+            cout_redirect guard( output.rdbuf());
+
+            b.displayTreeInverted();
+        }
+
+        std::string str = output.str();
+
+        str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
+
+        BOOST_CHECK_EQUAL(str, "    42 Elizabeth  37 Victoria      31 Anne    26 Charles      24 James        23 Elizabeth22 Mary      19 Henry    9 Edward      4 Stephen        1 William  0 Harold    -1 Edward");
     }
 
 BOOST_AUTO_TEST_SUITE_END()
