@@ -3,7 +3,8 @@
 #define BOOST_TEST_MAIN
 #include <boost/test/included/unit_test.hpp>
 
-#include "BST.h"
+#include "../../main/bst/src/BST.h"
+#include "../../main/bst/src/BST.cpp"
 
 // Test Fixtures: empty tree and tree with contents
 struct EmptyBinarySearchTree {
