@@ -116,6 +116,8 @@ void BST::displayTreeRecursion(const std::string& prefix, Node* node) {
 
         displayTreeRecursion(branch, node->leftChild);
         displayTreeRecursion(branch, node->rightChild);
+    } else {
+        std::cout << prefix << "*" << std::endl;
     }
 }
 
@@ -125,7 +127,7 @@ void BST::displayTreeInverted() {
 
 void BST::displayTreeRecursionInverted(const std::string& prefix, Node* node) {
     if (node != nullptr) {
-        std::string branch = prefix + "  ";
+        std::string branch = prefix + "    ";
 
         displayTreeRecursionInverted(branch, node->rightChild);
 
@@ -134,6 +136,8 @@ void BST::displayTreeRecursionInverted(const std::string& prefix, Node* node) {
         std::cout << node->key << " " << node->item << std::endl;
 
         displayTreeRecursionInverted(branch, node->leftChild);
+    } else {
+        std::cout << prefix << "*" << std::endl;
     }
 }
 

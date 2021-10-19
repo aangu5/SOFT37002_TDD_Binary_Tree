@@ -307,7 +307,7 @@ private:
 
         str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
 
-        BOOST_CHECK_EQUAL(str, "22 Mary  0 Harold    -1 Edward    9 Edward      4 Stephen        1 William      19 Henry  37 Victoria    26 Charles      24 James        23 Elizabeth      31 Anne    42 Elizabeth");
+        BOOST_CHECK_EQUAL(str, "22 Mary  0 Harold    -1 Edward      *      *    9 Edward      4 Stephen        1 William          *          *        *      19 Henry        *        *  37 Victoria    26 Charles      24 James        23 Elizabeth          *          *        *      31 Anne        *        *    42 Elizabeth      *      *");
     }
 
     BOOST_FIXTURE_TEST_CASE(Print_Tree_Inverted, BigBinarySearchTree) {
@@ -322,7 +322,7 @@ private:
 
         str.erase(std::remove(str.begin(), str.end(), '\n'), str.end());
 
-        BOOST_CHECK_EQUAL(str, "    42 Elizabeth  37 Victoria      31 Anne    26 Charles      24 James        23 Elizabeth22 Mary      19 Henry    9 Edward      4 Stephen        1 William  0 Harold    -1 Edward");
+        BOOST_CHECK_EQUAL(str, "            *        42 Elizabeth            *    37 Victoria                *            31 Anne                *        26 Charles                *            24 James                    *                23 Elizabeth                    *22 Mary                *            19 Henry                *        9 Edward                *            4 Stephen                    *                1 William                    *    0 Harold            *        -1 Edward            *");
     }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -3,7 +3,7 @@
 //
 
 #include "BST.h"
-#include "iostream"
+#include <iostream>
 
 int main()  {
     BST b;
@@ -36,5 +36,10 @@ int main()  {
     std::cout << "Printing inverted tree" << std::endl;
 
     b.displayTreeInverted();
+
+    // Used to keep the console open after the manual tests run
+    std::cout << "Please press enter to close the programme: ";
+    std::string input;
+    std::cin >> input;
 
 }
