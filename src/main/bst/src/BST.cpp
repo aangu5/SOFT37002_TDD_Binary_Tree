@@ -161,6 +161,9 @@ BST::Node* BST::removeRecursion(BST::Node* node, Key key) {
         node->rightChild = removeRecursion(node->rightChild, key);
     } else {
         if (node->leftChild == nullptr && node->rightChild == nullptr) {
+            if (node) {
+                delete(node);
+            }
             return nullptr;
         } else if (node->leftChild == nullptr) {
             Node* temp = node->rightChild;
@@ -178,6 +181,7 @@ BST::Node* BST::removeRecursion(BST::Node* node, Key key) {
         node->item = temp->item;
 
         node->rightChild = removeRecursion(node->rightChild, temp->key);
+
     }
     return node;
 }
