@@ -349,7 +349,7 @@ BOOST_AUTO_TEST_SUITE(Remove)
         BOOST_CHECK_EQUAL(output, expected);
     }
 
-    BOOST_FIXTURE_TEST_CASE(Remove_Two_Nodes, EmptyBinarySearchTree) {
+    BOOST_FIXTURE_TEST_CASE(Remove_Two_Nodes, BigBinarySearchTree) {
 
         b.remove(19);
         b.remove(22);
